@@ -236,7 +236,7 @@ class Plugin_Name_Admin {
 		);
 		 
 		// Registering your Custom Post Type
-		register_post_type( 'plugin-name-vids', $args );
+		register_post_type( 'plugin-name-ytvids', $args );
 	}
 
 }
