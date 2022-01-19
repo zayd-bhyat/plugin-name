@@ -129,6 +129,8 @@ class Plugin_Name_Admin {
 		$sub_menu_slug='base-plugin/importer.php';
 		$sub_function=array($this,'base_plugin_admin_sub_page');
 
+		$sub_bl=array( $this ,'base_plugin_blank_page');
+
 
 		
 
@@ -138,7 +140,7 @@ class Plugin_Name_Admin {
 		//add_submenu_page( $parent_slug:string, $page_title:string, $menu_title:string, $capability:string, $menu_slug:string, $function:callable, $position:integer|null )
 		
 		//importer menu
-		add_submenu_page('Base-Plugin YT Importer Settings','Base-Plugin YT Importer Settings','manage_options','base-plugin/yt-importer.php', 'base_plugin_yt_importer_page' );
+		add_submenu_page($menu_slug,'Base-Plugin Blank page','Base-Plugin Blank page','manage_options','base-plugin/blank-page.php', $sub_bl);
 	}
 
 
@@ -164,8 +166,8 @@ class Plugin_Name_Admin {
 		require_once 'partials/plugin-name-admin-submenu-display.php';
 	}
 
-	public function base_plugin_yt_importer_page(){
-		require_once 'partials/plugin-name-yt-impoter.php';
+	public function base_plugin_blank_page(){
+		require_once 'partials/plugin-name-second-sub-page.php';
 	}
 
 	/**

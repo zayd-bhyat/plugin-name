@@ -12,6 +12,14 @@
  * @subpackage Plugin_Name/admin/partials
  */
 ?>
+<?php 
+$thenewvar1 = '';
+  if(isset($_GET['var1'])){
+    $thenewvar1 = $_GET['var1'];
+  }
+
+  if($thenewvar1 == 'yes'){
+?>
 
 <h1>General Settings for YouTube Test</h1><br><hr>
 <div class="container" style="max-width:100%;">
@@ -38,9 +46,14 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
       </div>
-
+    <?php 
+    } else{
+        echo ('var1 not set');
+      }
+    ?>
 <?php
 //Store key to Variables
+/*
 $theyoutubekey = get_option('youtubeAPIKey');
 $thechannelid = get_option( 'youtubeChannelID');
 $arrContextOptions=array(
@@ -50,7 +63,7 @@ $arrContextOptions=array(
   ),
 );
 //Retrieve list of videos
-$videoList = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId='.$thechannelid.'&maxResults='.'1'.'&key='.$theyoutubekey.'', false, stream_context_create($arrContextOptions)));
+//$videoList = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId='.$thechannelid.'&maxResults='.'1'.'&key='.$theyoutubekey.'', false, stream_context_create($arrContextOptions)));
 
 //Sorth through items and output
 foreach($videoList->items as $item){
@@ -98,4 +111,7 @@ if($result && ! is_wp_error($result)){
   </div>
   </br>
   </br>-->
-<?php } ?>
+  <?php} */
+
+  
+  ?>
