@@ -113,7 +113,7 @@ class Plugin_Name_Admin {
 	public function my_admin_menu(){
 		//global
 		
-		//main menu
+		//main menu variables
 		$page_title='Base-Plugin Settings Page';
 		$menu_title='Base-Plugin Settings';
 		$capability='manage_options';
@@ -122,18 +122,23 @@ class Plugin_Name_Admin {
 		$icon_url='dashicons-tickets';
 		$position=250;
 
-		//submenu 
+		//submenu variables
 		$sub_page_title='Sub Level Page Title';
 		$sub_menu_title='Sub Level Menu Title';
 		
 		$sub_menu_slug='base-plugin/importer.php';
 		$sub_function=array($this,'base_plugin_admin_sub_page');
+
+
 		
 
 		add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position);
 		//add_menu_page( $page_title:string, $menu_title:string, $capability:string, $menu_slug:string, $function:callable, $icon_url:string, $position:integer|null );
 		add_submenu_page( $menu_slug, $sub_page_title, $sub_menu_title, $capability, $sub_menu_slug, $sub_function);
 		//add_submenu_page( $parent_slug:string, $page_title:string, $menu_title:string, $capability:string, $menu_slug:string, $function:callable, $position:integer|null )
+		
+		//importer menu
+		add_submenu_page('Base-Plugin YT Importer Settings','Base-Plugin YT Importer Settings','manage_options','base-plugin/yt-importer.php', 'base_plugin_yt_importer_page' );
 	}
 
 
@@ -157,6 +162,10 @@ class Plugin_Name_Admin {
 
 	public function base_plugin_admin_sub_page(){
 		require_once 'partials/plugin-name-admin-submenu-display.php';
+	}
+
+	public function base_plugin_yt_importer_page(){
+		require_once 'partials/plugin-name-yt-impoter.php';
 	}
 
 	/**
