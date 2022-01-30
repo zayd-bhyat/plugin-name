@@ -12,17 +12,12 @@
  * @subpackage Plugin_Name/admin/partials
  */
 ?>
-<?php 
-$thenewvar1 = '';
-  if(isset($_GET['var1'])){
-    $thenewvar1 = $_GET['var1'];
-  }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-  if($thenewvar1 == 'yes'){
-?>
 
-<h1>General Settings for YouTube Test</h1><br><hr>
 <div class="container" style="max-width:100%;">
+  <h1>General Settings for Base Plugin Youtube</h1><br><hr>
   <div class="row">
     <div class="col">
       <div class="alert alert-warning">
@@ -42,76 +37,35 @@ $thenewvar1 = '';
         <div class="form-group">
           <label for="youtubeChannelID">Your YouTube Channel ID:</label>
           <input type="text" name="youtubeChannelID" value="<?php echo get_option( 'youtubeChannelID' ); ?>" class="form-control" id="youtubeChannelID" placeholder="YouTube Channel ID">
-        </div>
+        </div><br>
         <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+        </form>
       </div>
-    <?php 
-    } else{
-        echo ('var1 not set');
-      }
-    ?>
-<?php
-//Store key to Variables
-/*
-$theyoutubekey = get_option('youtubeAPIKey');
-$thechannelid = get_option( 'youtubeChannelID');
-$arrContextOptions=array(
-  "ssl"=>array(
-      "verify_peer"=>false,
-      "verify_peer_name"=>false,
-  ),
-);
-//Retrieve list of videos
-//$videoList = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId='.$thechannelid.'&maxResults='.'1'.'&key='.$theyoutubekey.'', false, stream_context_create($arrContextOptions)));
-
-//Sorth through items and output
-foreach($videoList->items as $item){
-  $yt_title=$item->snippet->title;
-  $yt_description=$item->snippet->description;
-  //insert a new post video to CPT
-  $data=array(
-    'post_title' =>  wp_strip_all_tags($yt_title),
-    'post_description' => wp_strip_all_tags($yt_description),
-    'post_category' => array('uncategorized'),
-    'tags_input' => array(1),
-    'post_status' => 'publish',
-    'post_type' => 'plugin-name-ytvids'
-  );
-
-//insert this post into the DB and retrive the ID
-$result = wp_insert_post($data);
-
-//capture ID of post
-if($result && ! is_wp_error($result)){
-  $thenewpostID = $result;
-
-  //add YT meta data
-  add_post_meta($thenewpostID,'videoID',$item->id);
-  add_post_meta($thenewpostID,'publishedAt',$item->snippet->publishedAt);
-  add_post_meta($thenewpostID,'channelId',$item->snippet->channelId);
-  add_post_meta($thenewpostID,'yt_title',$item->snippet->title);
-  add_post_meta($thenewpostID,'yt_description',$item->snippet->description);
-  add_post_meta( $thenewpostID, 'imageresmed', $item->snippet->thumbnails->medium->url);
-  add_post_meta( $thenewpostID, 'imagereshigh', $item->snippet->thumbnails->high->url);
-  echo('<img src="'. get_post_meta( $thenewpostID, 'imageresmed',true ).'"/>');
-?>
-  <img src ="<?php get_post_meta($thenewpostID, 'imageresmed',true); ?>"/>
-<?php
- }
-?>
-
-
-  <!-- Loop videos and add to CPT -->
-
-  <!--<div>
-    <h1>// echo $item->snippet->title;?></h1>
-    <h3>// echo $item->snippet->description;?></h3>
-    <img src="// echo $item->snippet->thumbnails->medium->url;?>">
+    </div>
+    <div class="col">
+      <div class="alert alert-success">
+        <h1 class="display-4">ShortCode Information</h1>
+        <h3 class="">To Output Videos simply use this shortcode: "[base-plugin-yt]"</h3>
+        <hr>
+        <form>
+        <div class="form-group">
+            <label for="ypostcount">Number of Videos to show</label>
+            <input type="number" min="1" max="20" value="10" class="form-control" id="ypostcount">
+        </div>
+        <div class="form-group">         
+            <label for="ytvidstyletype">Display Style</label>
+            <select class="form-control" name="ytvidstyletype" id="ytvidstyletype">
+            <option>Image Left</option>
+            <option>Image Center</option>
+            <option>Image Right</option>
+            </select>
+        </div>
+        <br>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save Shortcode Changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
   </div>
-  </br>
-  </br>-->
-  <?php} */
-
-  
-  ?>
+</div>

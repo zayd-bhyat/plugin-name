@@ -139,21 +139,25 @@ class Plugin_Name_Admin {
 		add_submenu_page( $menu_slug, $sub_page_title, $sub_menu_title, $capability, $sub_menu_slug, $sub_function);
 		//add_submenu_page( $parent_slug:string, $page_title:string, $menu_title:string, $capability:string, $menu_slug:string, $function:callable, $position:integer|null )
 		
-		//importer menu
+		//blank page menu
 		add_submenu_page($menu_slug,'Base-Plugin Blank page','Base-Plugin Blank page','manage_options','base-plugin/blank-page.php', $sub_bl);
+
+		//importer menu
+		add_submenu_page($menu_slug,'Base-Plugin Youtube Importer','Base-Plugin Youtube Importer','manage_options','base-plugin/yt-importer.php', array($this,'base_plugin_yt_importer_page'));
+
 	}
 
 
 	public function enqueue_admin_css(){
-		error_log('bs_enqueue_styles ran');
-		error_log('style path is: ' . plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css');
+		//error_log('bs_enqueue_styles ran');
+		//error_log('style path is: ' . plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css');
 
-		wp_enqueue_style( 'admin_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
+		//wp_enqueue_style( 'admin_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
 	}
 
 
 	public function enqueue_admin_js(){
-		wp_enqueue_script( 'admin_bootstarp_js', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
+		//wp_enqueue_script( 'admin_bootstarp_js', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
 	}
 
 
@@ -168,6 +172,10 @@ class Plugin_Name_Admin {
 
 	public function base_plugin_blank_page(){
 		require_once 'partials/plugin-name-second-sub-page.php';
+	}
+
+	public function base_plugin_yt_importer_page(){
+		require_once 'partials/plugin-name-yt-importer.php';
 	}
 
 	/**
