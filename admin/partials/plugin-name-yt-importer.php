@@ -11,9 +11,45 @@
  * @package    Plugin_Name
  * @subpackage Plugin_Name/admin/partials
  */
+
+//get the current page
+ $thecurrentpage = $_GET['page'];
+
 ?>
+<!--Styles -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<!--/Styles -->
 
 <h1>General Settings for YouTube Test</h1><br><hr>
+<div class="container" style="width:100%; text-align:center;">
+  <div class="row alert-primary">
+    <div class="col-sm">
+      <h4>Click to import YouTube videos from channel</h4>
+      <form method="get" action="">
+        <input type="hidden" value="<?php echo($thecurrentpage); ?>" name="page"/>
+        <input type="hidden" value="import" name="action"/>
+        <button type="submit" class="btn btn-success btn-lg">Import</button>
+      </form> 
+    </div>
+    <div class="col-sm">
+      <h4>Renew/Update YouTube Videos</h4>
+      <form method="get" action="">
+        <input type="hidden" value="<?php echo($thecurrentpage); ?>" name="page"/>
+        <input type="hidden" value="renew" name="action"/>
+        <button type="submit" class="btn btn-warning btn-lg">Renew</button>
+      </form>
+    </div>
+    <div class="col-sm">
+      <h4>Delete All YouTube Videos</h4>
+      <form>
+        <input type="hidden" value="<?php echo($thecurrentpage); ?>" name="page"/>
+        <input type="hidden" value="delete" name="action"/>
+        <button type="submit" class="btn btn-danger btn-lg">Delete All</button>
+      </form>
+    </div>
+  </div>
+</div>
 <?php
 //Store key to Variables
 /*
