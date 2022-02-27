@@ -191,7 +191,7 @@ class Plugin_Name_Admin {
 		 register_setting('baseplugincustomsettings','thedays');
 		 register_setting('baseplugincustomsettings','themultiselect');
 	 }
-
+	
 	/**
 	 * Register YouTube API Key settings
 	 *
@@ -200,6 +200,11 @@ class Plugin_Name_Admin {
 	 public function register_base_plugin_yt_settings(){
 		register_setting( 'basepluginytsetting', 'youtubeAPIKey' );
 		register_setting( 'basepluginytsetting', 'youtubeChannelID' );
+	 }
+
+	 public function register_base_plugin_shortcode_settings(){
+		register_setting( 'basepluginshortcodesettings', 'ypostcount' );
+		register_setting( 'basepluginshortcodesettings', 'ytvidstyletype' );
 	 }
 
 	//this function creates CPT for videos

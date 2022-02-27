@@ -44,28 +44,32 @@
     </div>
     <div class="col">
       <div class="alert alert-success">
-        <h1 class="display-4">ShortCode Information</h1>
-        <h3 class="">To Output Videos simply use this shortcode: "[base-plugin-yt]"</h3>
-        <hr>
-        <form>
+      <h1 class="display-4">ShortCode Information</h1>
+      <h3 class="">To Output Videos simply use this shortcode: "[base-plugin-yt]"</h3>
+      <hr>
+      <form method="post" action="options.php">
+        <?php
+        settings_fields( 'basepluginshortcodesettings' );
+        do_settings_sections( 'basepluginshortcodesettings' )
+        ?>
         <div class="form-group">
             <label for="ypostcount">Number of Videos to show</label>
-            <input type="number" min="1" max="20" value="10" class="form-control" id="ypostcount">
+            <input name="ypostcount" type="number" value=<?php echo get_option('ypostcount');?> class="form-control" id="ypostcount">
         </div>
         <div class="form-group">         
             <label for="ytvidstyletype">Display Style</label>
-            <select class="form-control" name="ytvidstyletype" id="ytvidstyletype">
-            <option>Image Left</option>
-            <option>Image Center</option>
-            <option>Image Right</option>
+            <select class="form-control" min="1" max="5" name="ytvidstyletype" id="ytvidstyletype">
+              <option <?php if (get_option ('ytvidstyletype') == 'Image Left'){echo( 'selected');} ?>>Image Left</option>
+              <option <?php if (get_option ('ytvidstyletype') == 'Image Center'){echo( 'selected');} ?>>Image Center</option>
+              <option <?php if (get_option ('ytvidstyletype') == 'Image Right'){echo( 'selected');} ?>>Image Right</option>
             </select>
         </div>
         <br>
         <div class="form-group">
             <button type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save Shortcode Changes</button>
         </div>
-    </form>
-      </div>
+      </form>
+    </div>
     </div>
   </div>
 </div>
