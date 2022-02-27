@@ -142,6 +142,7 @@ class Plugin_Name_Public {
 				?>
 				<div>
 					<p><?php  echo($eachYTpost -> yt_title); ?> </p>
+					<p><?php  echo($eachYTpost -> videoID -> videoId); ?> </p>
 					<p><?php  echo($eachYTpost -> publishedAt); ?> </p>
 					<img src=" <?php echo($eachYTpost -> imageresmed);?>"/>
 				</div>
