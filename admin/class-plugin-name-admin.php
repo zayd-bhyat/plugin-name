@@ -113,7 +113,7 @@ class Plugin_Name_Admin {
 	public function my_admin_menu(){
 		//global
 		
-		//main menu
+		//main menu variables
 		$page_title='Base-Plugin Settings Page';
 		$menu_title='Base-Plugin Settings';
 		$capability='manage_options';
@@ -122,31 +122,42 @@ class Plugin_Name_Admin {
 		$icon_url='dashicons-tickets';
 		$position=250;
 
-		//submenu 
+		//submenu variables
 		$sub_page_title='Sub Level Page Title';
 		$sub_menu_title='Sub Level Menu Title';
 		
 		$sub_menu_slug='base-plugin/importer.php';
 		$sub_function=array($this,'base_plugin_admin_sub_page');
+
+		$sub_bl=array( $this ,'base_plugin_blank_page');
+
+
 		
 
 		add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position);
 		//add_menu_page( $page_title:string, $menu_title:string, $capability:string, $menu_slug:string, $function:callable, $icon_url:string, $position:integer|null );
 		add_submenu_page( $menu_slug, $sub_page_title, $sub_menu_title, $capability, $sub_menu_slug, $sub_function);
 		//add_submenu_page( $parent_slug:string, $page_title:string, $menu_title:string, $capability:string, $menu_slug:string, $function:callable, $position:integer|null )
+		
+		//blank page menu
+		add_submenu_page($menu_slug,'Base-Plugin Blank page','Base-Plugin Blank page','manage_options','base-plugin/blank-page.php', $sub_bl);
+
+		//importer menu
+		add_submenu_page($menu_slug,'Base-Plugin Youtube Importer','Base-Plugin Youtube Importer','manage_options','base-plugin/yt-importer.php', array($this,'base_plugin_yt_importer_page'));
+
 	}
 
 
 	public function enqueue_admin_css(){
-		error_log('bs_enqueue_styles ran');
-		error_log('style path is: ' . plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css');
+		//error_log('bs_enqueue_styles ran');
+		//error_log('style path is: ' . plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css');
 
-		wp_enqueue_style( 'admin_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
+		//wp_enqueue_style( 'admin_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap.min.css', array(), $this->version, 'all' );
 	}
 
 
 	public function enqueue_admin_js(){
-		wp_enqueue_script( 'admin_bootstarp_js', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
+		//wp_enqueue_script( 'admin_bootstarp_js', plugin_dir_url( __FILE__ ) . 'js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
 	}
 
 
@@ -157,6 +168,14 @@ class Plugin_Name_Admin {
 
 	public function base_plugin_admin_sub_page(){
 		require_once 'partials/plugin-name-admin-submenu-display.php';
+	}
+
+	public function base_plugin_blank_page(){
+		require_once 'partials/plugin-name-second-sub-page.php';
+	}
+
+	public function base_plugin_yt_importer_page(){
+		require_once 'partials/plugin-name-yt-importer.php';
 	}
 
 	/**
