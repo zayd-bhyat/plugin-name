@@ -98,6 +98,12 @@ class Plugin_Name_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-name-public.js', array( 'jquery' ), $this->version, false );
 	}
 
+	//output video shortcode function
+	public function basepluginytshotcode() {
+		//output video
+		
+	}
+
 
 //first hellow world shortcode
 	

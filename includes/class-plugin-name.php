@@ -168,6 +168,9 @@ class Plugin_Name {
 		//register general settings
 		$this->loader->add_action('admin_init',$plugin_admin,'register_base_plugin_general_settings');
 
+		//register shortcode settings
+		$this->loader->add_action('admin_init',$plugin_admin,'register_base_plugin_shortcode_settings');
+
 		//register yt settings
 		$this->loader->add_action('admin_init',$plugin_admin,'register_base_plugin_yt_settings');
 
@@ -192,6 +195,9 @@ class Plugin_Name {
 
 		//add shortcode
 		$this->loader->add_shortcode( 'basepluginhw1', $plugin_public, 'hello_world' );
+
+		//add shortcode
+		$this->loader->add_shortcode( 'base-plugin-yt', $plugin_public, 'basepluginytshotcode');
 	}
 
 	/**
