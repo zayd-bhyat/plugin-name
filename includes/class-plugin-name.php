@@ -197,7 +197,7 @@ class Plugin_Name {
 		$this->loader->add_shortcode( 'basepluginhw1', $plugin_public, 'hello_world' );
 
 		//add shortcode
-		$this->loader->add_shortcode( 'base-plugin-yt', $plugin_public, 'basepluginytshotcode');
+		$this->loader->add_shortcode( 'basepluginyt', $plugin_public, 'basepluginytshortcode');
 	}
 
 	/**

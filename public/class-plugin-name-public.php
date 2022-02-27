@@ -98,15 +98,7 @@ class Plugin_Name_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-name-public.js', array( 'jquery' ), $this->version, false );
 	}
 
-	//output video shortcode function
-	public function basepluginytshotcode() {
-		//output video
-		
-	}
-
-
-//first hellow world shortcode
-	
+	//first hellow world shortcode
 	public function hello_world() {
 		//get the general settings options
 		$userdays = get_option('thedays' );
@@ -132,5 +124,29 @@ class Plugin_Name_Public {
 		else{
 			return 'There was an error please check settings';
 		}
+	}
+
+	//output video shortcode function
+	public function basepluginytshortcode() {
+		
+			//delete all videos of CPT
+		
+			//get all the posts
+			$postcount = (get_option('ypostcount'));
+			$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => $postcount));
+			?>
+			<p>Number of potst: <?php echo($postcount); ?></p>
+			<?php
+			//Loop through and de;ete all posts
+			foreach($allWPYTPost as $eachYTpost){
+				?>
+				<div>
+					<p><?php  echo($eachYTpost -> yt_title); ?> </p>
+					<p><?php  echo($eachYTpost -> publishedAt); ?> </p>
+					<img src=" <?php echo($eachYTpost -> imageresmed);?>"/>
+				</div>
+				<?php
+			}
+		
 	}
 }
