@@ -135,19 +135,21 @@ class Plugin_Name_Public {
 			$postcount = (get_option('ypostcount'));
 			$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => $postcount));
 			?>
-			<p>Number of potst: <?php echo($postcount); ?></p>
+			<div class="grid-container">
 			<?php
 			//Loop through and de;ete all posts
 			foreach($allWPYTPost as $eachYTpost){
 				?>
-				<div>
-					<p><?php  echo($eachYTpost -> yt_title); ?> </p>
-					<p><?php  echo($eachYTpost -> videoID -> videoId); ?> </p>
-					<p><?php  echo($eachYTpost -> publishedAt); ?> </p>
-					<img src=" <?php echo($eachYTpost -> imageresmed);?>"/>
+				<div class="grid-item">
+					<p style="font-size:18px;"><?php  echo($eachYTpost -> yt_title); ?> </p>
+					<p><?php  //echo($eachYTpost -> videoID -> videoId); ?> </p>
+					<p><?php  //echo($eachYTpost -> publishedAt); ?> </p>
+					<a target="_blank" href="<?php echo('http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId); ?>"><img src=" <?php echo($eachYTpost -> imageresmed);?>"/></a>
 				</div>
 				<?php
 			}
-		
+		?> 
+		</div>
+		<?php
 	}
 }
