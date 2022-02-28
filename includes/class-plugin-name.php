@@ -169,7 +169,7 @@ class Plugin_Name {
 		$this->loader->add_action('admin_init',$plugin_admin,'register_base_plugin_general_settings');
 
 		//register shortcode settings
-		$this->loader->add_action('admin_init',$plugin_admin,'register_base_plugin_shortcode_settings');
+		$this->loader->add_action('admin_init',$plugin_admin,'register_base_plugin_shortcode_settings');//grid display
 
 		//register yt settings
 		$this->loader->add_action('admin_init',$plugin_admin,'register_base_plugin_yt_settings');
@@ -198,6 +198,9 @@ class Plugin_Name {
 
 		//add shortcode
 		$this->loader->add_shortcode( 'basepluginyt', $plugin_public, 'basepluginytshortcode');
+
+		//add shortcode
+		$this->loader->add_shortcode( 'baseplugindisplaybox', $plugin_public, 'baseplugindisplaybox');
 	}
 
 	/**

@@ -141,15 +141,49 @@ class Plugin_Name_Public {
 			foreach($allWPYTPost as $eachYTpost){
 				?>
 				<div class="grid-item">
+					
 					<p style="font-size:18px;"><?php  echo($eachYTpost -> yt_title); ?> </p>
 					<p><?php  //echo($eachYTpost -> videoID -> videoId); ?> </p>
 					<p><?php  //echo($eachYTpost -> publishedAt); ?> </p>
-					<a target="_blank" href="<?php echo('http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId); ?>"><img src=" <?php echo($eachYTpost -> imageresmed);?>"/></a>
+					<a target="_blank" href="<?php echo('http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID ); ?>"><img src=" <?php echo($eachYTpost -> imageresmed);?>"/></a>
+					
 				</div>
 				<?php
 			}
 		?> 
 		</div>
 		<?php
+
+	}
+	public function baseplugindisplaybox(){
+		//set vid ID
+		$thevid = '';
+		$thepostid='';
+		
+
+		//check for issset
+		if (isset($_GET['vid'])){
+			$thevid = $_GET['vid'];
+			$thepostid =$_GET['oid'];
+		}
+
+		if ($thevid == ''){
+			return '<pre><h1>No video to display</h1></pre>';
+			
+			
+		
+		}
+		else{
+			//display vidoe in box
+			$thetitle=(get_post_meta($thepostid, 'yt_title',true));
+			?>
+				<h3><?php echo($thetitle); ?></h3>
+			<?php
+			
+			return 	'<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/'.($thevid).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
+			?>
+		
+			<?php
+		}
 	}
 }

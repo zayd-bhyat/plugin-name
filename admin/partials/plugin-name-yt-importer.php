@@ -81,7 +81,7 @@
     ),
   );
   //Retrieve list of videos
-  $videoList = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId='.$thechannelid.'&maxResults='.'5'.'&key='.$theyoutubekey.'', false, stream_context_create($arrContextOptions)));
+  $videoList = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId='.$thechannelid.'&maxResults='.'6'.'&key='.$theyoutubekey.'', false, stream_context_create($arrContextOptions)));
 
   //Sorth through items and output
   foreach($videoList->items as $item){
