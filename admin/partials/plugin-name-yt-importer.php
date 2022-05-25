@@ -147,7 +147,7 @@
 
     //get all the posts
     $allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids'));
-    //Loop through and de;ete all posts
+    //Loop through and delete all posts
     foreach($allWPYTPost as $eachYTpost){
       wp_delete_post($eachYTpost ->ID, true);
       $blnDelete = true;

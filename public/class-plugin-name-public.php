@@ -133,11 +133,11 @@ class Plugin_Name_Public {
 		
 			//get all the posts
 			$postcount = (get_option('ypostcount'));
-			$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => $postcount));
+			$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => $postcount, 'order' => 'ASC'));
 			?>
 			<div class="grid-container">
 			<?php
-			//Loop through and de;ete all posts
+			//Loop through and list all posts
 			foreach($allWPYTPost as $eachYTpost){
 				?>
 				<div class="grid-item">
@@ -169,9 +169,6 @@ class Plugin_Name_Public {
 
 		if ($thevid == ''){
 			return '<pre><h1>No video to display</h1></pre>';
-			
-			
-		
 		}
 		else{
 			//display vidoe in box
@@ -179,11 +176,33 @@ class Plugin_Name_Public {
 			?>
 				<h3><?php echo($thetitle); ?></h3>
 			<?php
+			$theplayer = '<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/'.($thevid).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
 			
-			return 	'<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/'.($thevid).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
-			?>
-		
-			<?php
+			
+				$theplayer .='<hr>';
+				
+				$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 3, 'order' => 'ASC'));
+				
+				$theplayer .='<div class="grid-container">';
+					
+					//Loop through and list all posts
+					foreach($allWPYTPost as $eachYTpost){
+				
+						$theplayer .='<div class="grid-item">';
+					
+						$theplayer .='<p style="font-size:14px;">' .$eachYTpost -> yt_title.'</p>';
+
+						$theplayer .='<a href="http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>';
+						$theplayer .='</div>';
+	
+					}
+					
+					$theplayer .='</div>';
+			
+			return $theplayer;
 		}
+	
+	
 	}
+
 }
