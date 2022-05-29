@@ -176,22 +176,54 @@ class Plugin_Name_Public {
 			?>
 				<!--Load Jquery-->
 				<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+				
+				<!-- Load subscribe Button -->
 				<script src="https://apis.google.com/js/platform.js"></script>
 				<pre><div class="g-ytsubscribe" data-channel="UC_x5XG1OV2P6uZZ5FSM9Ttw" data-layout="default" data-count="default"></div></pre>
 
 				<script type="text/javascript">
-					jQuery(document).ready(function($){
-						$('#adunit').delay(5000).fadeOut(5000);
-						$('#topvid').delay(10000).fadeIn(5000);
-						
+					jQuery(function($){
+						//Set Ad Fade Out
+						setTimeout(function(){
+							$('#topvid').fadeIn();
+						},15000);
+
+						setTimeout(function(){
+							$('#adunit').fadeOut();
+							$('#advid').attr("src", "about:blank");
+						},15100);
+
+						setTimeout(function(){
+							$('#skip').fadeIn();
+						},3000);
 					});
+
+					//Skip Ad button
+					function skipper(){
+						$('#topvid').fadeIn();
+						$('#adunit').fadeOut();
+						$('#advid').attr("src", "about:blank");
+					}
 					</script>
 				
 			<?php
+				//Ad Video
 				$theplayer = '<div id="adunit">';
 				$theplayer .='<h3>Sponsored Content</h3>';
-				$theplayer .= '<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/gsy2N-XI04o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
+				$theplayer .= '<div class="grid-container" style="grid-template-columns: 2fr 1fr;">';
+				$theplayer .= '<div class="grid-item">';
+				$theplayer .= '<pre><iframe width="560" height="315" id="advid" src="https://www.youtube.com/embed/gsy2N-XI04o?autoplay=1&rel=0&mute=1&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
 				$theplayer .= '</div>';
+				$theplayer .= '<div class="grid-item">';
+				$theplayer .= '<p>Learn more about FTX</p>';
+				$theplayer .= '<a href="#" target="_blank"><button type="button">Here</button></a>';
+				$theplayer .= '<br><br><br>';
+				$theplayer .= '<button id="skip" type="button" onClick="skipper()" style="display:none;">Skip Ad</button>';
+				$theplayer .= '</div>';
+				$theplayer .= '</div>';
+				$theplayer .= '</div>';
+
+				//Main Video
 				$theplayer .='<div id="topvid" style="display:none;">';
 				$theplayer .= '<h3>'.$thetitle.'</h3>';
 				$theplayer .= '<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/'.($thevid).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
