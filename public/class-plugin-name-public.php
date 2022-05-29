@@ -174,19 +174,38 @@ class Plugin_Name_Public {
 			//display vidoe in box
 			$thetitle=(get_post_meta($thepostid, 'yt_title',true));
 			?>
+				<!--Load Jquery-->
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
 				<script src="https://apis.google.com/js/platform.js"></script>
 				<pre><div class="g-ytsubscribe" data-channel="UC_x5XG1OV2P6uZZ5FSM9Ttw" data-layout="default" data-count="default"></div></pre>
-				<h3><?php echo($thetitle); ?></h3>
+
+				<script type="text/javascript">
+					jQuery(document).ready(function($){
+						$('#adunit').delay(5000).fadeOut(5000);
+						$('#topvid').delay(10000).fadeIn(5000);
+						
+					});
+					</script>
+				
 			<?php
-			$theplayer = '<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/'.($thevid).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
-			
+				$theplayer = '<div id="adunit">';
+				$theplayer .='<h3>Sponsored Content</h3>';
+				$theplayer .= '<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/gsy2N-XI04o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
+				$theplayer .= '</div>';
+				$theplayer .='<div id="topvid" style="display:none;">';
+				$theplayer .= '<h3>'.$thetitle.'</h3>';
+				$theplayer .= '<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/'.($thevid).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
+				$theplayer .='</div>';
+
+				//Other Videos
+				//Loop through and list all posts
 			
 				$theplayer .='<hr>';
 				$theplayer .='<h4>Check out the most recent videos</h4>';
 				
 				$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 4, 'order' => 'ASC'));
 				$theplayer .='<div class="grid-container">';
-				//Loop through and list all posts
+
 				$i =0;//Keeps track of videos output
 					foreach($allWPYTPost as $eachYTpost){
 						//check if video is current video
