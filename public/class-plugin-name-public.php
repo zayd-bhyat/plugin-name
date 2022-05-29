@@ -174,27 +174,37 @@ class Plugin_Name_Public {
 			//display vidoe in box
 			$thetitle=(get_post_meta($thepostid, 'yt_title',true));
 			?>
+				<script src="https://apis.google.com/js/platform.js"></script>
+				<pre><div class="g-ytsubscribe" data-channel="UC_x5XG1OV2P6uZZ5FSM9Ttw" data-layout="default" data-count="default"></div></pre>
 				<h3><?php echo($thetitle); ?></h3>
 			<?php
 			$theplayer = '<pre><iframe width="560" height="315" src="https://www.youtube.com/embed/'.($thevid).'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
 			
 			
 				$theplayer .='<hr>';
+				$theplayer .='<h4>Check out the most recent videos</h4>';
 				
-				$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 3, 'order' => 'ASC'));
-				
+				$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 4, 'order' => 'ASC'));
 				$theplayer .='<div class="grid-container">';
-					
-					//Loop through and list all posts
+				//Loop through and list all posts
+				$i =0;//Keeps track of videos output
 					foreach($allWPYTPost as $eachYTpost){
-				
-						$theplayer .='<div class="grid-item">';
-					
-						$theplayer .='<p style="font-size:14px;">' .$eachYTpost -> yt_title.'</p>';
-
-						$theplayer .='<a href="http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>';
-						$theplayer .='</div>';
-	
+						//check if video is current video
+						if($eachYTpost -> ID == $thepostid){
+							//Do nothing
+						}
+						else{
+							if($i >= 3){ //If already 3 posts
+								//do nothing
+							}
+							else{// Output all videos
+								$theplayer .='<div class="grid-item">';
+								$theplayer .='<p style="font-size:14px;">' .$eachYTpost -> yt_title.'</p>';
+								$theplayer .='<a href="http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>';
+								$theplayer .='</div>';
+								$i++;//Increase Vid Counter
+							}
+						}
 					}
 					
 					$theplayer .='</div>';
