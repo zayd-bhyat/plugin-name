@@ -182,6 +182,7 @@ class Plugin_Name_Public {
 				<pre><div class="g-ytsubscribe" data-channel="UC_x5XG1OV2P6uZZ5FSM9Ttw" data-layout="default" data-count="default"></div></pre>
 
 				<script type="text/javascript">
+					var theseconds = <?php echo get_option('adskipseconds'). '000'; ?>;
 					jQuery(function($){
 						//Set Ad Fade Out
 						setTimeout(function(){
@@ -195,7 +196,7 @@ class Plugin_Name_Public {
 
 						setTimeout(function(){
 							$('#skip').fadeIn();
-						},3000);
+						},theseconds);
 					});
 
 					//Skip Ad button
@@ -207,16 +208,22 @@ class Plugin_Name_Public {
 					</script>
 				
 			<?php
+				//Ad Video variables
+				$adVideoID = get_option('advideo');
+				$adVideoTitle = get_option('adtitle');
+				$adVideoBody = get_option('adbodytext');
+				$adVideoButton = get_option('adbuttontext');
+
 				//Ad Video
 				$theplayer = '<div id="adunit">';
-				$theplayer .='<h3>Sponsored Content</h3>';
+				$theplayer .='<h3>'.$adVideoTitle.'</h3>';
 				$theplayer .= '<div class="grid-container" style="grid-template-columns: 2fr 1fr;">';
 				$theplayer .= '<div class="grid-item">';
-				$theplayer .= '<pre><iframe width="560" height="315" id="advid" src="https://www.youtube.com/embed/gsy2N-XI04o?autoplay=1&rel=0&mute=1&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
+				$theplayer .= '<pre><iframe width="560" height="315" id="advid" src="https://www.youtube.com/embed/'.$adVideoID.'?autoplay=1&rel=0&mute=1&controls=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></pre>';
 				$theplayer .= '</div>';
 				$theplayer .= '<div class="grid-item">';
-				$theplayer .= '<p>Learn more about FTX</p>';
-				$theplayer .= '<a href="#" target="_blank"><button type="button">Here</button></a>';
+				$theplayer .= '<p>'.$adVideoBody.'</p>';
+				$theplayer .= '<a href="#" target="_blank"><button type="button">'.$adVideoButton.'</button></a>';
 				$theplayer .= '<br><br><br>';
 				$theplayer .= '<button id="skip" type="button" onClick="skipper()" style="display:none;">Skip Ad</button>';
 				$theplayer .= '</div>';
@@ -250,7 +257,7 @@ class Plugin_Name_Public {
 							}
 							else{// Output all videos
 								$theplayer .='<div class="grid-item">';
-								$theplayer .='<p style="font-size:14px;">' .$eachYTpost -> yt_title.'</p>';
+								$theplayer .='<p style="font-size:16px;">' .$eachYTpost -> yt_title.'</p>';
 								$theplayer .='<a href="http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>';
 								$theplayer .='</div>';
 								$i++;//Increase Vid Counter

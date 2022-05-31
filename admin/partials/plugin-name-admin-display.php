@@ -41,35 +41,72 @@
         <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
+
+      <div class="alert alert-primary">
+        <h1 class="display-4">Advertiser settings</h1>
+        <h3 class="">Setup the advertiser settings</h3>
+        <hr>
+        <form method="post" action="options.php">
+          <?php
+          settings_fields( 'basepluginadsettings' );
+          do_settings_sections( 'basepluginadsettings' )
+          ?>
+          <div class="form-group">
+              <label for="adskipseconds">Skip AD after X number of seconds</label>
+              <input name="adskipseconds" type="number" value=<?php echo get_option('adskipseconds');?> class="form-control" id="adskipseconds">
+          </div>
+          <div class="form-group">
+              <label for="advideo">Advertiser YouTube ID</label>
+              <input type="text" name="advideo" value="<?php echo get_option( 'advideo' ); ?>" class="form-control" id="advideo" placeholder="example: pfwGRkG1Xwc"> 
+          </div>
+          <div class="form-group">         
+              <label for="advideo">AD Title</label>
+              <input type="text" name="adtitle" value="<?php echo get_option( 'adtitle' ); ?>" class="form-control" id="adtitle" placeholder=""> 
+          </div>
+          <div class="form-group">         
+              <label for="advideo">AD Body Text</label>
+              <input type="text" name="adbodytext" value="<?php echo get_option( 'adbodytext' ); ?>" class="form-control" id="adbodytext" placeholder=""> 
+          </div>
+          <div class="form-group">         
+              <label for="advideo">Ad Button Text</label>
+              <input type="text" name="adbuttontext" value="<?php echo get_option( 'adbuttontext' ); ?>" class="form-control" id="adbuttontext" placeholder=""> 
+          </div>
+          <br>
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save Advertiser Settings</button>
+          </div>
+        </form>
+      </div>
     </div>
+
     <div class="col">
       <div class="alert alert-success">
-      <h1 class="display-4">ShortCode Information</h1>
-      <h3 class="">To Output Videos simply use this shortcode: "[base-plugin-yt]"</h3>
-      <hr>
-      <form method="post" action="options.php">
-        <?php
-        settings_fields( 'basepluginshortcodesettings' );
-        do_settings_sections( 'basepluginshortcodesettings' )
-        ?>
-        <div class="form-group">
-            <label for="ypostcount">Number of Videos to show</label>
-            <input name="ypostcount" type="number" value=<?php echo get_option('ypostcount');?> class="form-control" id="ypostcount">
-        </div>
-        <div class="form-group">         
-            <label for="ytvidstyletype">Display Style</label>
-            <select class="form-control" min="1" max="5" name="ytvidstyletype" id="ytvidstyletype">
-              <option <?php if (get_option ('ytvidstyletype') == 'Image Left'){echo( 'selected');} ?>>Image Left</option>
-              <option <?php if (get_option ('ytvidstyletype') == 'Image Center'){echo( 'selected');} ?>>Image Center</option>
-              <option <?php if (get_option ('ytvidstyletype') == 'Image Right'){echo( 'selected');} ?>>Image Right</option>
-            </select>
-        </div>
-        <br>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save Shortcode Changes</button>
-        </div>
+        <h1 class="display-4">ShortCode Information</h1>
+        <h3 class="">To Output Videos simply use this shortcode: "[base-plugin-yt]"</h3>
+        <hr>
+        <form method="post" action="options.php">
+          <?php
+          settings_fields( 'basepluginshortcodesettings' );
+          do_settings_sections( 'basepluginshortcodesettings' )
+          ?>
+          <div class="form-group">
+              <label for="ypostcount">Number of Videos to show</label>
+              <input name="ypostcount" type="number" value=<?php echo get_option('ypostcount');?> class="form-control" id="ypostcount">
+          </div>
+          <div class="form-group">         
+              <label for="ytvidstyletype">Display Style</label>
+              <select class="form-control" min="1" max="5" name="ytvidstyletype" id="ytvidstyletype">
+                <option <?php if (get_option ('ytvidstyletype') == 'Image Left'){echo( 'selected');} ?>>Image Left</option>
+                <option <?php if (get_option ('ytvidstyletype') == 'Image Center'){echo( 'selected');} ?>>Image Center</option>
+                <option <?php if (get_option ('ytvidstyletype') == 'Image Right'){echo( 'selected');} ?>>Image Right</option>
+              </select>
+          </div>
+          <br>
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save Shortcode Changes</button>
+          </div>
       </form>
     </div>
-    </div>
-  </div>
-</div>
+  </div><!-- End Row -->
+
+</div> <!-- End Container -->

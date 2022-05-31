@@ -177,6 +177,9 @@ class Plugin_Name {
 		//CPT for yt vids
 		$this->loader->add_action('init',$plugin_admin,'custom_youtube_api');
 
+		//Custom add settings
+		$this->loader->add_action('init',$plugin_admin,'register_base_plugin_advertiser_settings');
+
 	}
 
 	/**

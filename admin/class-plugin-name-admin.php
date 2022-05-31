@@ -207,6 +207,19 @@ class Plugin_Name_Admin {
 		register_setting( 'basepluginshortcodesettings', 'ytvidstyletype' );
 	 }
 
+	/**
+	 * Register Advertiser settings
+	 *
+	 * @since    1.0.0
+	 */
+	 public function register_base_plugin_advertiser_settings(){
+		register_setting( 'basepluginadsettings', 'advideo' );
+		register_setting( 'basepluginadsettings', 'adtitle' );
+		register_setting( 'basepluginadsettings', 'adbodytext' );
+		register_setting( 'basepluginadsettings', 'adbuttontext' );
+		register_setting( 'basepluginadsettings', 'adskipseconds' );
+	 }
+
 	//this function creates CPT for videos
 	public function custom_youtube_api(){
 		/*
