@@ -59,6 +59,7 @@
   //Bool for user import
   $blnImport = false;//Determine if user imported
   $blnDelete = false;//Detemine if user deleted
+  $blnRenew = false;//Detemine if user Renewewd
   //get the action
 
   if (isset($_GET['action'])){
@@ -87,6 +88,7 @@
   foreach($videoList->items as $item){
     $yt_title=$item->snippet->title;
     $yt_description=$item->snippet->description;
+    
     //insert a new post video to CPT
     $data=array(
       'post_title' =>  wp_strip_all_tags($yt_title),
@@ -141,6 +143,105 @@
 
   //=======================
   //=======================
+  //Renew Action start
+
+  if($theaction == 'renew'){
+
+    //Get all the video posts
+    $allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 2500, 'order' => 'ASC'));
+    $compvids = '';
+    
+    //Check if there are videos to update
+    if (count($allWPYTPost) ==0 ){
+      echo('<h2>There are no videos please click import first</h2>');
+    }
+    
+    else{
+
+      //There are videos cycle through videos
+      foreach($allWPYTPost as $YTPost){
+        
+        if($YTPost -> videoID -> videoId == ''){
+          //This is not a vdeo
+        } 
+        else{
+            //This is a video
+            $compvids = ',' .$compvids .$YTPost -> videoID -> videoId . ',';
+        }
+      }//end foreach
+
+      //echo($compvids);//List Video ID string
+      //Call new videos and compare
+
+      $theyoutubekey = get_option('youtubeAPIKey');
+      $thechannelid = get_option( 'youtubeChannelID');
+      $arrContextOptions=array(
+      "ssl"=>array(
+          "verify_peer"=>false,
+          "verify_peer_name"=>false,
+        ),
+      );
+      //Retrieve list of videos
+      $videoList = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId='.$thechannelid.'&maxResults='.'6'.'&key='.$theyoutubekey.'', false, stream_context_create($arrContextOptions)));
+
+      //Sort through and add new videos
+      foreach($videoList -> items as $item){
+        //check if we have video
+        $videoexists = strpos($compvids, $item->id->videoId);
+
+        //check to see if video exists
+        if($videoexists > 0){
+          //found
+          //echo('found'.$videoexists.'<br>');//Print Video ID
+        }
+
+        else{
+          
+          //add video because not found
+          $yt_title=$item->snippet->title;
+          $yt_description=$item->snippet->description;
+          //insert a new post video to CPT
+          $data=array(
+            'post_title' =>  wp_strip_all_tags($yt_title),
+            'post_description' => wp_strip_all_tags($yt_description),
+            'post_category' => array('uncategorized'),
+            'tags_input' => array(1),
+            'post_status' => 'publish',
+            'post_type' => 'plugin-name-ytvids'
+          );
+
+          //insert this post into the DB and retrive the ID
+          $result = wp_insert_post($data);
+
+          //capture ID of post
+          if($result && ! is_wp_error($result)){
+            $thenewpostID = $result;
+
+            //add YT meta data
+            add_post_meta($thenewpostID,'videoID',$item->id);
+            add_post_meta($thenewpostID,'publishedAt',$item->snippet->publishedAt);
+            add_post_meta($thenewpostID,'channelId',$item->snippet->channelId);
+            add_post_meta($thenewpostID,'yt_title',$item->snippet->title);
+            add_post_meta($thenewpostID,'yt_description',$item->snippet->description);
+            add_post_meta( $thenewpostID, 'imageresmed', $item->snippet->thumbnails->medium->url);
+            add_post_meta( $thenewpostID, 'imagereshigh', $item->snippet->thumbnails->high->url);
+            //echo('<img src="'. get_post_meta( $thenewpostID, 'imageresmed',true ).'"/>');
+          
+            //Set Import True
+            $blnRenew = true;
+            }
+        }
+      }
+    }
+  }
+
+
+  //Renew Action end
+  //=======================
+  //=======================
+
+  //=======================
+  //=======================
   //Delete Action start
   if($theaction == 'delete'){
     //delete all videos of CPT
@@ -173,6 +274,14 @@
     <br><br>
     <div class="alert alert-danger" style="max-width:100%;">
       <h2>You have scuccessfully deleted the Videos</h2>
+    </div>
+  <?php
+  }
+  elseif ($blnRenew == true){
+    ?>
+    <br><br>
+    <div class="alert alert-warning" style="max-width:100%;">
+      <h2>You have renewed videos from Yoututbe</h2>
     </div>
   <?php
   }
