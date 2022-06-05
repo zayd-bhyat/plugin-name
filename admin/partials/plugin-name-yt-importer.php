@@ -247,7 +247,7 @@
     //delete all videos of CPT
 
     //get all the posts
-    $allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids'));
+    $allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => -1));
     //Loop through and delete all posts
     foreach($allWPYTPost as $eachYTpost){
       wp_delete_post($eachYTpost ->ID, true);
@@ -277,7 +277,7 @@
     </div>
   <?php
   }
-  elseif ($blnRenew == true){
+  elseif($blnRenew == true){
     ?>
     <br><br>
     <div class="alert alert-warning" style="max-width:100%;">
@@ -285,4 +285,42 @@
     </div>
   <?php
   }
+  ?>
+
+  <?php
+    $allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 100));
+    $vidsOrdered = array();// Holds all timestaps and video ID's
+    $i =0; //Keeps count of item we are adding information to
+  
+    //Loop through all posts
+    foreach($allWPYTPost as $eachYTPost){
+      $vidsOrdered[$i] = array();
+      
+      //capture ID of post and published at date
+      $sortDate = $eachYTPost -> publishedAt;
+      $strToTimeFormate = strtotime($sortDate);
+      $dateTimeFormat = date('Y-m-d H:i:s', $strToTimeFormate);
+  
+      //add item to array
+      $vidsOrdered[$i]['datetime'] = $dateTimeFormat;
+      $vidsOrdered[$i]['theID'] = $eachYTPost->ID;
+  
+      //increase count
+      $i++; 
+    }
+
+    print_r($vidsOrdered, true);
+
+    $fp = fopen('output.txt', 'w');
+    fwrite($fp, print_r($vidsOrdered, true));
+    fclose($fp);
+
+    function date_compare($a, $b){
+        $t1 = strtotime($a['datetime']);
+        $t2 = strtotime($b['datetime']);
+        return $t1=$t2;
+    }
+    usort($vidsOrdered, 'date_compare');
+    echo('<br><br><br><br>');
+    print_r($vidsOrdered, true);
   ?>

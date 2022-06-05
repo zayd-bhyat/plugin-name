@@ -217,8 +217,12 @@ class Plugin_Name_Public {
 				}
 				echo('</div>');
 			}
-			
-			echo('<br><center><button type="button" onclick = "showMoreVids()" class="btn btn-primary">Load more Videos</button></center>');
+			if($numvids <=6){
+				//do nothing
+			}
+			else{
+				echo('<br><center><button type="button" onclick = "showMoreVids()" class="btn btn-primary">Load more Videos</button></center>');
+			}
 			?> 
 		<?php
 	}
