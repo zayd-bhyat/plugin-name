@@ -133,28 +133,96 @@ class Plugin_Name_Public {
 		
 			//get all the posts
 			$postcount = (get_option('ypostcount'));
-			$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => $postcount, 'order' => 'ASC'));
+			$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 2500, 'order' => 'ASC'));
+
+			//New var for more videos
+			$numvids = count($allWPYTPost);//How many videos we have
+			$eachSix = 0 ;//Start another 6 more videos
+			$newGrid = 1;// Keeps track of grid's output to page
+			$newFirst = true;//Tells us if first item in grid
+
+			//check how many videos we have
+			if($numvids <= 6){		
 			?>
 			<div class="grid-container">
 			<?php
 			//Loop through and list all posts
-			foreach($allWPYTPost as $eachYTpost){
-				?>
-				<div class="grid-item">
+				foreach($allWPYTPost as $eachYTpost){
+					?>
+					<div class="grid-item">
+						
+						<p style="font-size:18px;"><?php  echo($eachYTpost -> yt_title); ?> </p>
+						<p><?php  //echo($eachYTpost -> videoID -> videoId); ?> </p>
+						<p><?php  //echo($eachYTpost -> publishedAt); ?> </p>
+						<a target="_blank" href="<?php echo('http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID ); ?>"><img src=" <?php echo($eachYTpost -> imageresmed);?>"/></a>
+						
+					</div>
+					<?php
 					
-					<p style="font-size:18px;"><?php  echo($eachYTpost -> yt_title); ?> </p>
-					<p><?php  //echo($eachYTpost -> videoID -> videoId); ?> </p>
-					<p><?php  //echo($eachYTpost -> publishedAt); ?> </p>
-					<a target="_blank" href="<?php echo('http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID ); ?>"><img src=" <?php echo($eachYTpost -> imageresmed);?>"/></a>
-					
-				</div>
-				<?php
+				}
 			}
-		?> 
-		</div>
-		<?php
+			else{
+				?>
+				<!-- Output JS -->
+				<!--Load Jquery-->
+				<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+				
+				<script>
+					var vidCount = 2;
+					function showMoreVids(){
+						try{
+							$("#gridvid" +vidCount).fadeIn();
+						}
+						catch{
 
+						}
+						//increase counter
+						vidCount = vidCount + 1;
+					}
+					
+				</script>
+	
+
+				<?php
+				//We have more than 6 videos
+				foreach($allWPYTPost as $eachYTpost){
+					//this is new set so create hidden container
+					if($eachSix == 0){
+						if($newFirst == true){
+							//this is first grid output so show it
+							echo('<div class="grid-container">');
+							$newFirst = false;
+						}
+						else {
+							echo('<div class="grid-container" style="display:none" id="gridvid'.$newGrid.'">');	
+						}
+					}
+
+					//build grid as normal
+					echo('<div class="grid-item">');
+					echo('<p style="font-size:18px;">'.$eachYTpost -> yt_title.'</p>');
+					echo('<a target="_blank" href="http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>');
+					echo('</div>');
+
+					//update the eachsix
+					$eachSix +=1;
+
+					//check for eachsix equal to 6
+					if($eachSix == 6){
+						//Create new container
+						echo('</div>');
+						$eachSix = 0;
+						$newGrid += 1;
+					}
+				}
+				echo('</div>');
+			}
+			
+			echo('<br><center><button type="button" onclick = "showMoreVids()" class="btn btn-primary">Load more Videos</button></center>');
+			?> 
+		<?php
 	}
+
 	public function baseplugindisplaybox(){
 		//set vid ID
 		$thevid = '';
@@ -205,6 +273,7 @@ class Plugin_Name_Public {
 						$('#adunit').fadeOut();
 						$('#advid').attr("src", "about:blank");
 					}
+
 					</script>
 				
 			<?php
