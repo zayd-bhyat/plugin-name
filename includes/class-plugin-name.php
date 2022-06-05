@@ -180,6 +180,9 @@ class Plugin_Name {
 		//Custom add settings
 		$this->loader->add_action('init',$plugin_admin,'register_base_plugin_advertiser_settings');
 
+		//add schedduled events/Cron Jobs
+		$this -> loader->add_action('ytvidupdater',$plugin_admin,'ytvidupdate');
+
 	}
 
 	/**
@@ -204,6 +207,8 @@ class Plugin_Name {
 
 		//add shortcode
 		$this->loader->add_shortcode( 'baseplugindisplaybox', $plugin_public, 'baseplugindisplaybox');
+
+
 	}
 
 	/**

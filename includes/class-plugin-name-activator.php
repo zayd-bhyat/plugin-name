@@ -31,6 +31,13 @@ class Plugin_Name_Activator {
 	 */
 	public static function activate() {
 
+		//create new cronjob
+
+		if(! wp_next_scheduled( 'ytvidupdater')){
+			wp_schedule_event( time(), 'daily', 'ytvidupdater');
+
+		}
+
 	}
 
 }
