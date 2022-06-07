@@ -130,7 +130,7 @@ class Plugin_Name_Public {
 	public function basepluginytshortcode() {
 		
 			//delete all videos of CPT
-		
+			
 			//get all the posts
 			$postcount = (get_option('ypostcount'));
 			$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 2500, 'order' => 'ASC'));
@@ -225,6 +225,8 @@ class Plugin_Name_Public {
 			}
 			?> 
 		<?php
+		
+		//$this -> loadbydate();
 	}
 
 	public function baseplugindisplaybox(){
@@ -346,4 +348,133 @@ class Plugin_Name_Public {
 	
 	}
 
+	//Need to fix this function and understand logic better
+	public function loadbydate(){
+		//Handles videos to load by date
+
+		$allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 100));
+		$vidsOrdered = array();// Holds all timestaps and video ID's
+		$i =0; //Keeps count of item we are adding information to
+
+		//New var for more videos
+		$numvids = count($allWPYTPost);//How many videos we have
+		$eachSix = 0 ;//Start another 6 more videos
+		$newGrid = 1;// Keeps track of grid's output to page
+		$newFirst = true;//Tells us if first item in grid
+
+		//Loop through all posts
+		foreach($allWPYTPost as $eachYTPost){
+		  $vidsOrdered[$i] = array();
+		  
+		  //capture ID of post and published at date
+		  $sortDate = $eachYTPost -> publishedAt;
+		  $strToTimeFormate = strtotime($sortDate);
+		  $dateTimeFormat = date('Y-m-d H:i:s', $strToTimeFormate);
+	  
+		  //add item to array
+		  $vidsOrdered[$i]['datetime'] = $dateTimeFormat;
+		  $vidsOrdered[$i]['theID'] = $eachYTPost->ID;
+	  
+		  //increase count
+		  $i++; 
+		}
+	
+		function date_compare($a, $b){
+			$t1 = strtotime($a['datetime']);
+			$t2 = strtotime($b['datetime']);
+			return $t1=$t2;
+		}
+		usort($vidsOrdered, 'date_compare');
+
+		//cycle through the database and grab post by ID with data
+		$icount = count($vidsOrdered);
+		$icount --;
+
+		if($vidsOrdered <= 6){
+			echo('<div class="grid-container">');
+			do{
+				$curPOST = get_post($vidsOrdered[$icount]['theID']);
+				echo('<div class="grid-item">');
+				echo('<p style="font-size:18px;">'.$curPOST -> yt_title.'</p>');
+				echo('<a target="_blank" href="http://localhost:8000/watch-vid/?vid='.$curPOST -> videoID -> videoId .'&oid='.$curPOST->ID.'"><img src="'.$curPOST -> imageresmed.'"/></a>');
+				echo('</div>');
+				//increment counter in reverse
+				$icount--;
+			} while($icount > 0);
+			echo('</div>');	
+					
+		}
+
+		else{
+			do{
+			//build more boxes
+			$curPOST = get_post($vidsOrdered[$icount]['theID']);
+
+			?>
+			<!-- Output JS -->
+			<!--Load Jquery-->
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+			
+			<script>
+				var vidCount = 2;
+				function showMoreVids(){
+					try{
+						$("#gridvid" +vidCount).fadeIn();
+					}
+					catch{
+
+					}
+					//increase counter
+					vidCount = vidCount + 1;
+				}
+				
+			</script>
+
+
+			<?php
+			//We have more than 6 videos
+			//foreach($allWPYTPost as $eachYTpost){
+				//this is new set so create hidden container
+				if($eachSix == 0){
+					if($newFirst == true){
+						//this is first grid output so show it
+						echo('<div class="grid-container">');
+						$newFirst = false;
+					}
+					else {
+						echo('<div class="grid-container" style="display:none" id="gridvid'.$newGrid.'">');	
+					}
+				}
+
+				//build grid as normal
+				echo('<div class="grid-item">');
+				echo('<p style="font-size:18px;">'.$curPOST  -> yt_title.'</p>');
+				echo('<a target="_blank" href="http://localhost:8000/watch-vid/?vid='.$curPOST  -> videoID -> videoId .'&oid='.$curPOST ->ID.'"><img src="'.$curPOST  -> imageresmed.'"/></a>');
+				echo('</div>');
+
+				//update the eachsix
+				$eachSix +=1;
+
+				//check for eachsix equal to 6
+				if($eachSix == 6){
+					//Create new container
+					echo('</div>');
+					$eachSix = 0;
+					$newGrid += 1;
+				}
+
+
+				$icount--;
+			} 
+			while ($icount> 0);
+			echo('</div>');
+		}
+			
+			
+		echo('<br><center><button type="button" onclick = "showMoreVids()" class="btn btn-primary">Load more Videos</button></center>');
+	}
+	
+	
 }
+
+

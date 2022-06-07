@@ -285,9 +285,7 @@
     </div>
   <?php
   }
-  ?>
-
-  <?php
+ 
     $allWPYTPost = get_posts(array('post_type'=>'plugin-name-ytvids', 'numberposts' => 100));
     $vidsOrdered = array();// Holds all timestaps and video ID's
     $i =0; //Keeps count of item we are adding information to
@@ -323,4 +321,3 @@
     usort($vidsOrdered, 'date_compare');
     echo('<br><br><br><br>');
     print_r($vidsOrdered, true);
-  ?>
