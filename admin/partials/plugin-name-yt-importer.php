@@ -308,10 +308,7 @@
     }
 
     print_r($vidsOrdered, true);
-
-    $fp = fopen('output.txt', 'w');
-    fwrite($fp, print_r($vidsOrdered, true));
-    fclose($fp);
+    file_put_contents('filename.txt', print_r($vidsOrdered, true));
 
     function date_compare($a, $b){
         $t1 = strtotime($a['datetime']);

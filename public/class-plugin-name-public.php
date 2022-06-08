@@ -128,7 +128,7 @@ class Plugin_Name_Public {
 
 	//output video shortcode function
 	public function basepluginytshortcode() {
-		
+		/*
 			//delete all videos of CPT
 			
 			//get all the posts
@@ -222,11 +222,8 @@ class Plugin_Name_Public {
 			}
 			else{
 				echo('<br><center><button type="button" onclick = "showMoreVids()" class="btn btn-primary">Load more Videos</button></center>');
-			}
-			?> 
-		<?php
-		
-		//$this -> loadbydate();
+			}*/
+		$this -> loadbydate();
 	}
 
 	public function baseplugindisplaybox(){
@@ -247,14 +244,14 @@ class Plugin_Name_Public {
 		else{
 			//display vidoe in box
 			$thetitle=(get_post_meta($thepostid, 'yt_title',true));
-			?>
-				<!--Load Jquery-->
-				<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>
+			
+				//Load Jquery
+				ehco('<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>');
+				echo('<script src="https://apis.google.com/js/platform.js"></script>');
+				//Load subscribe Button
 				
-				<!-- Load subscribe Button -->
-				<script src="https://apis.google.com/js/platform.js"></script>
-				<pre><div class="g-ytsubscribe" data-channel="UC_x5XG1OV2P6uZZ5FSM9Ttw" data-layout="default" data-count="default"></div></pre>
-
+				echo('<pre><div class="g-ytsubscribe" data-channel="UC_x5XG1OV2P6uZZ5FSM9Ttw" data-layout="default" data-count="default"></div></pre>');
+			?>
 				<script type="text/javascript">
 					var theseconds = <?php echo get_option('adskipseconds'). '000'; ?>;
 					jQuery(function($){
@@ -378,17 +375,27 @@ class Plugin_Name_Public {
 		  //increase count
 		  $i++; 
 		}
+
+		echo('Before Sort<br><br><br>');
+		echo(print_r($vidsOrdered, true));
 	
 		function date_compare($a, $b){
 			$t1 = strtotime($a['datetime']);
 			$t2 = strtotime($b['datetime']);
-			return $t1=$t2;
+			return $t1-$t2;//Missed this stupid small error
 		}
 		usort($vidsOrdered, 'date_compare');
+		$fp = fopen('file.txt', 'w');
+		fwrite($fp,'checking log file');
+		fwrite($fp, print_r($vidsOrdered, true));
+		fclose($fp);
 
 		//cycle through the database and grab post by ID with data
 		$icount = count($vidsOrdered);
 		$icount --;
+		echo('$icount: '.$icount.'<br>');
+		echo('<br><br><br>After Sort<br><br><br>');
+		echo(print_r($vidsOrdered, true));
 
 		if($vidsOrdered <= 6){
 			echo('<div class="grid-container">');
