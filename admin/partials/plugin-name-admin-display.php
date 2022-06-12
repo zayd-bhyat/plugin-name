@@ -11,7 +11,11 @@
  * @package    Plugin_Name
  * @subpackage Plugin_Name/admin/partials
  */
+
+ //get the current page
+ $thecurrentpage = $_GET['page'];
 ?>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <style>
@@ -154,7 +158,23 @@
         </div><br>
         <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-      </div>      </div>
+        
+        <br>
+        <hr>
+        <br>
+        <p style="font-size:20px;">Enter new Youtube Channel ID's below and re-import to add your videos to the database. You can re-import <a target="_blank" href="http://localhost:8000/wp-admin/admin.php?page=base-plugin%2Fyt-importer.php">here</a></p>
+        <form method ="get" action="">
+          <input type="hidden" value="<?php echo($thecurrentpage); ?>" name="page"/>
+          <div class="mb-3">
+            <label for="newchannelid" class="form-label">New YouTube Channel ID</label>
+            <input type="text" class="form-control" id="newchannelid" name="newchannelid" aria-describedby="newchannelidHelp">
+            <div id="newchannelidHelp" class="form-text">Your Channel ID should look something like this: UCLr9nHPNpj7U3096nEo8Qfg</div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      </div>      
+    </div>
     </div>
   </div>
   <div class="accordion-item">
@@ -240,6 +260,4 @@
       </div>
     </div>
   </div>
-</div>
-
 </div> <!-- End Container -->

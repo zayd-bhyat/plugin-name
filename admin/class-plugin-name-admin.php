@@ -367,6 +367,64 @@ class Plugin_Name_Admin {
 
 	}
 
+	//Custom post for channel ID
+	public function yt_channel_ids(){
+			/*
+		*Create a function to create the CPT
+		*/
+
+		$labels = array(
+			'name'                => _x( 'YouTube Channel IDs', 'Post Type General Name'),
+			'singular_name'       => _x( 'YouTube Channel', 'Post Type Singular Name'),
+			'menu_name'           => __( 'YouTube Channel'),
+			'parent_item_colon'   => __( 'Parent Channel'),
+			'all_items'           => __( 'All Channel'),
+			'view_item'           => __( 'View Channel'),
+			'add_new_item'        => __( 'Add New YouTube Channel'),
+			'add_new'             => __( 'Add New'),
+			'edit_item'           => __( 'Edit'),
+			'update_item'         => __( 'Update'),
+			'search_items'        => __( 'Search'),
+			'not_found'           => __( 'Not Found'),
+			'not_found_in_trash'  => __( 'Not found in Trash'),
+		);
+		 
+	// Set other options for Custom Post Type
+		 
+		$args = array(
+			'label'               => __( 'yt-channel-id'),
+			'description'         => __( 'YouTube Videos from our Channel'),
+			'labels'              => $labels,
+			// Features this CPT supports in Post Editor
+			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+			// You can associate this CPT with a taxonomy or custom taxonomy. 
+			'taxonomies'          => array( 'genres' ),
+			/* A hierarchical CPT is like Pages and can have
+			* Parent and child items. A non-hierarchical CPT
+			* is like Posts.
+			*/ 
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => false,
+			'show_in_menu'        => false,
+			'show_in_nav_menus'   => true,
+			'show_in_admin_bar'   => true,
+			'menu_position'       => 5,
+			'can_export'          => false,
+			'has_archive'         => true,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'post',
+			'show_in_rest' => false,
+	 
+		);
+		 
+		// Registering your Custom Post Type
+		//changes made
+		register_post_type( 'yt-channel-id', $args );
+	}
+
+
 }
 
 
