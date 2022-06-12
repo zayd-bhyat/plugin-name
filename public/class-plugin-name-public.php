@@ -246,7 +246,7 @@ class Plugin_Name_Public {
 			$thetitle=(get_post_meta($thepostid, 'yt_title',true));
 			
 				//Load Jquery
-				ehco('<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>');
+				echo('<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="crossorigin="anonymous"></script>');
 				echo('<script src="https://apis.google.com/js/platform.js"></script>');
 				//Load subscribe Button
 				
