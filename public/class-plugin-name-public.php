@@ -359,8 +359,21 @@ class Plugin_Name_Public {
 		$newGrid = 1;// Keeps track of grid's output to page
 		$newFirst = true;//Tells us if first item in grid
 
+		//generate random number
+		$randomVideo = '';
+		$randomizer = rand(1, $numvids -1);
+		
+		//error checking randomizer
+		//echo('randomizer:'.$randomizer);
+		//echo('<br>');
+
 		//Loop through all posts
 		foreach($allWPYTPost as $eachYTPost){
+		
+		  //checkif the current vdeo matches random video
+		  if($i == $randomizer){
+			  $randomVideo ='<center><a href="http://localhost:8000/watch-vid/?vid='.$eachYTPost -> videoID -> videoId .'&oid='.$eachYTPost->ID.'" target="_blank"><button class="btn btn-primary" type="button">Watch a random video now</button></a></center><br><hr>';
+		  }
 		  $vidsOrdered[$i] = array();
 		  
 		  //capture ID of post and published at date
@@ -376,8 +389,9 @@ class Plugin_Name_Public {
 		  $i++; 
 		}
 
-		echo('Before Sort<br><br><br>');
-		echo(print_r($vidsOrdered, true));
+		//echo('Before Sort<br><br><br>');
+		//echo(print_r($vidsOrdered, true));
+		//error checking for display
 	
 		function date_compare($a, $b){
 			$t1 = strtotime($a['datetime']);
@@ -393,9 +407,14 @@ class Plugin_Name_Public {
 		//cycle through the database and grab post by ID with data
 		$icount = count($vidsOrdered);
 		$icount --;
-		echo('$icount: '.$icount.'<br>');
-		echo('<br><br><br>After Sort<br><br><br>');
-		echo(print_r($vidsOrdered, true));
+
+		//Error checking for array
+		//echo('$icount: '.$icount.'<br>');
+		//echo('<br><br><br>After Sort<br><br><br>');
+		//echo(print_r($vidsOrdered, true));
+
+		//outpur random watch button
+		echo($randomVideo);
 
 		if($vidsOrdered <= 6){
 			echo('<div class="grid-container">');
