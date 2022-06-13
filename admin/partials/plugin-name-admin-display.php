@@ -18,6 +18,40 @@
   //User message system output
   $strStatusMessage = '';
 
+  //check to see if we need to add a channelID post
+  if(isset($_GET['newchannelid'])){
+    if($_GET['newchannelid'] != ''){
+      //add the new channel ID
+      //insert a new post video to CPT
+      $yt_channelid = $_GET['newchannelid'];
+      $yt_channelname = 'new channel post';
+      $data=array(
+        'post_title' =>  wp_strip_all_tags($yt_channelid),
+        'post_content' => wp_strip_all_tags($yt_channelname),
+        'post_status' => 'publish',
+        'post_type' => 'yt-channel-id'
+      );
+      //insert this post into the DB
+      $result = wp_insert_post($data);
+    }
+  }
+
+  //check to see if channel ID is going to be deleted
+  if(isset($_GET['existingchannelids'])){
+    if(($_GET['existingchannelids']!=='')){
+      //remove the channel
+      $strDeletionChannel = explode(' ^?/^ ', $_GET['existingchannelids']);
+
+      //delete the post channel id item
+      wp_delete_post($strDeletionChannel[1], true);
+
+      //set the status message
+      $strStatusMessage = '<div class="alert alert-danger">You deleted this channel from the database! Would you like to remove the videos with this channel ID?<a href="'.$strDeletionChannel[0].'">Remove Videos</a></div>';
+    }
+  }
+
+
+
     if(isset($_GET['newchannelid'])){
       if($_GET['newchannelid'] != ''){
         $strStatusMessage = '<div class="alert alert-success">You have added a new channled! Would you like to import vidoes from this new channel? <a href="/wp-admin/admin.php?page=base-plugin%2Fyt-importer.php&action=import">Yes, Please</a></div>';
@@ -52,7 +86,9 @@
       echo($strStatusMessage);
     } 
   ?>
-  <h1>General Settings for Base Plugin Youtube</h1><br><hr>
+  <h1>General Settings for Base Plugin Youtube</h1>
+  <br>
+  <hr>
   <!--<div class="row">
     <div class="col">
       <div class="alert alert-warning">
@@ -187,6 +223,42 @@
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+      <hr>
+      <form method="get" action="">
+        <input type="hidden" value="<?php echo($thecurrentpage); ?>" name="page"/>
+        <?php
+        ?>
+        <div class="form-group">
+            <label for="existingchannelids">Example select</label>
+            <select class="form-control" name="existingchannelids" id="existingchannelids">
+           
+            <?php
+              //get all the channel ids
+              $allchannelids = get_posts(array('post_type'=>'yt-channel-id', 'numberposts' => -1));
+              
+              //debug checking for channel ID Count
+              //echo ('<option>'.count($allchannelids).'</option>');
+              
+              //check if there are any to display
+              if(count($allchannelids) == 0){
+                //nothing happens
+                echo('<option>No Channel IDs</option>');
+              }
+              else{
+                foreach ($allchannelids as $channelid){
+                  echo('<option>'.$channelid -> post_title.' ^?/^ '.$channelid -> ID.'</option>');
+                }
+              }
+            
+            ?>  
+            </select>
+        </div>
+        <br>
+        <div class="form-group">
+          <button type="submit" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Delete this channel</button>
+        </div>
+      </form>
+
 
       </div>      
     </div>
