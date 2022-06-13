@@ -12,8 +12,17 @@
  * @subpackage Plugin_Name/admin/partials
  */
 
- //get the current page
- $thecurrentpage = $_GET['page'];
+  //get the current page
+  $thecurrentpage = $_GET['page'];
+
+  //User message system output
+  $strStatusMessage = '';
+
+    if(isset($_GET['newchannelid'])){
+      if($_GET['newchannelid'] != ''){
+        $strStatusMessage = '<div class="alert alert-success">You have added a new channled! Would you like to import vidoes from this new channel? <a href="/wp-admin/admin.php?page=base-plugin%2Fyt-importer.php&action=import">Yes, Please</a></div>';
+      }
+    }
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -37,6 +46,12 @@
 </style>
 
 <div class="container" style="max-width:100%;">
+  <?php
+    //check if there is a status messge
+    if ($strStatusMessage !== ''){    
+      echo($strStatusMessage);
+    } 
+  ?>
   <h1>General Settings for Base Plugin Youtube</h1><br><hr>
   <!--<div class="row">
     <div class="col">
@@ -162,7 +177,7 @@
         <br>
         <hr>
         <br>
-        <p style="font-size:20px;">Enter new Youtube Channel ID's below and re-import to add your videos to the database. You can re-import <a target="_blank" href="http://localhost:8000/wp-admin/admin.php?page=base-plugin%2Fyt-importer.php">here</a></p>
+        <p style="font-size:20px;">Enter new Youtube Channel ID's below and re-import to add your videos to the database.</p>
         <form method ="get" action="">
           <input type="hidden" value="<?php echo($thecurrentpage); ?>" name="page"/>
           <div class="mb-3">
