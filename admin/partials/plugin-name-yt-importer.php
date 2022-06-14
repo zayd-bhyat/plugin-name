@@ -74,15 +74,22 @@
   if($theaction == 'import'){
 
   $theyoutubekey = get_option('youtubeAPIKey');
-  $thechannelid = get_option( 'youtubeChannelID');
+  //$thechannelid = get_option( 'youtubeChannelID');
   $arrContextOptions=array(
     "ssl"=>array(
         "verify_peer"=>false,
         "verify_peer_name"=>false,
     ),
   );
+
+
+  //new import call
+  $ytchannelids = get_posts(array('post_type'=>'yt-channel-id', 'numberposts' => -1));
+
+  foreach($ytchannelids as $eachchannelid){
+
   //Retrieve list of videos
-  $videoList = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId='.$thechannelid.'&maxResults='.'50'.'&key='.$theyoutubekey.'', false, stream_context_create($arrContextOptions)));
+  $videoList = json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId='.$eachchannelid->post_title.'&maxResults='.'50'.'&key='.$theyoutubekey.'', false, stream_context_create($arrContextOptions)));
 
   //Sorth through items and output
   foreach($videoList->items as $item){
@@ -136,8 +143,14 @@
     </br
     <?php }//end for each
 
+    }//end channel id loop
+
+
+    //slow script down for API call 
+    sleep(3);
+
   }//end import if
-  //end import
+  //end import block
   //=======================
   //=======================
 
@@ -171,6 +184,7 @@
       }//end foreach
 
       //echo($compvids);//List Video ID string
+      
       //Call new videos and compare
 
       $theyoutubekey = get_option('youtubeAPIKey');
