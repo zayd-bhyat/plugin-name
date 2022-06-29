@@ -154,7 +154,7 @@ class Plugin_Name_Public {
 						<p style="font-size:18px;"><?php  echo($eachYTpost -> yt_title); ?> </p>
 						<p><?php  //echo($eachYTpost -> videoID -> videoId); ?> </p>
 						<p><?php  //echo($eachYTpost -> publishedAt); ?> </p>
-						<a target="_blank" href="<?php echo('http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID ); ?>"><img src=" <?php echo($eachYTpost -> imageresmed);?>"/></a>
+						<a target="_blank" href="<?php echo('/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID ); ?>"><img src=" <?php echo($eachYTpost -> imageresmed);?>"/></a>
 						
 					</div>
 					<?php
@@ -201,7 +201,7 @@ class Plugin_Name_Public {
 					//build grid as normal
 					echo('<div class="grid-item">');
 					echo('<p style="font-size:18px;">'.$eachYTpost -> yt_title.'</p>');
-					echo('<a target="_blank" href="http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>');
+					echo('<a target="_blank" href="/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>');
 					echo('</div>');
 
 					//update the eachsix
@@ -330,7 +330,7 @@ class Plugin_Name_Public {
 							else{// Output all videos
 								$theplayer .='<div class="grid-item">';
 								$theplayer .='<p style="font-size:16px;">' .$eachYTpost -> yt_title.'</p>';
-								$theplayer .='<a href="http://localhost:8000/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>';
+								$theplayer .='<a href="/watch-vid/?vid='.$eachYTpost -> videoID -> videoId .'&oid='.$eachYTpost->ID.'"><img src="'.$eachYTpost -> imageresmed.'"/></a>';
 								$theplayer .='</div>';
 								$i++;//Increase Vid Counter
 							}
@@ -372,7 +372,7 @@ class Plugin_Name_Public {
 		
 		  //checkif the current vdeo matches random video
 		  if($i == $randomizer){
-			  $randomVideo ='<center><a href="http://localhost:8000/watch-vid/?vid='.$eachYTPost -> videoID -> videoId .'&oid='.$eachYTPost->ID.'" target="_blank"><button class="btn btn-primary" type="button">Watch a random video now</button></a></center><br><hr>';
+			  $randomVideo ='<center><a href="/watch-vid/?vid='.$eachYTPost -> videoID -> videoId .'&oid='.$eachYTPost->ID.'" target="_blank"><button class="btn btn-primary" type="button">Watch a random video now</button></a></center><br><hr>';
 		  }
 		  $vidsOrdered[$i] = array();
 		  
@@ -422,7 +422,7 @@ class Plugin_Name_Public {
 				$curPOST = get_post($vidsOrdered[$icount]['theID']);
 				echo('<div class="grid-item">');
 				echo('<p style="font-size:18px;">'.$curPOST -> yt_title.'</p>');
-				echo('<a target="_blank" href="http://localhost:8000/watch-vid/?vid='.$curPOST -> videoID -> videoId .'&oid='.$curPOST->ID.'"><img src="'.$curPOST -> imageresmed.'"/></a>');
+				echo('<a target="_blank" href="/watch-vid/?vid='.$curPOST -> videoID -> videoId .'&oid='.$curPOST->ID.'"><img src="'.$curPOST -> imageresmed.'"/></a>');
 				echo('</div>');
 				//increment counter in reverse
 				$icount--;
@@ -475,7 +475,7 @@ class Plugin_Name_Public {
 				//build grid as normal
 				echo('<div class="grid-item">');
 				echo('<p style="font-size:18px;">'.$curPOST  -> yt_title.'</p>');
-				echo('<a target="_blank" href="http://localhost:8000/watch-vid/?vid='.$curPOST  -> videoID -> videoId .'&oid='.$curPOST ->ID.'"><img src="'.$curPOST  -> imageresmed.'"/></a>');
+				echo('<a target="_blank" href="/watch-vid/?vid='.$curPOST  -> videoID -> videoId .'&oid='.$curPOST ->ID.'"><img src="'.$curPOST  -> imageresmed.'"/></a>');
 				echo('</div>');
 
 				//update the eachsix
